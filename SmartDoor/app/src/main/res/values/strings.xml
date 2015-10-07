@@ -1,0 +1,13 @@
+<resources>
+    <!-- Strings for Login Activity -->
+    <string name="app_name">SmartDoor</string>
+    <string name="prompt_username">Username</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign In</string>
+    <string name="action_register">Register</string>
+    <!-- Strings for Register Activity -->
+    <string name="prompt_firstname">First Name</string>
+    <string name="prompt_lastname">Last Name</string>
+    <string name="prompt_raspberry_pi_id">Raspeberry Pi ID</string>
+    <string name="title_activity_register">Smart Door</string>
+</resources>
