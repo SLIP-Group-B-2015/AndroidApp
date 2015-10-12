@@ -43,31 +43,14 @@
         android:layout_alignParentStart="true"
         android:layout_alignEnd="@+id/tvLastName" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/prompt_raspberry_pi_id"
-        android:id="@+id/tvRaspberryPi"
-        android:layout_below="@+id/etPasswordEntry"
-        android:layout_alignStart="@+id/etRaspberryPi"
-        android:layout_alignEnd="@+id/tvPasswordEntry" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/etRaspberryPi"
-        android:layout_below="@+id/tvRaspberryPi"
-        android:layout_alignStart="@+id/etUsernameEntry"
-        android:layout_alignEnd="@+id/etUsernameEntry" />
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/action_register"
-        android:id="@+id/bt_register"
-        android:layout_below="@+id/etRaspberryPi"
-        android:layout_alignStart="@+id/etRaspberryPi"
-        android:layout_alignEnd="@+id/etRaspberryPi" />
+        android:text="@string/action_scan"
+        android:id="@+id/bt_raspberry_pi"
+        android:layout_below="@+id/etPasswordEntry"
+        android:layout_centerHorizontal="true"
+        android:longClickable="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -92,14 +75,21 @@
         android:text="@string/prompt_password"
         android:id="@+id/tvPasswordEntry"
         android:layout_below="@+id/etUsernameEntry"
-        android:layout_alignStart="@+id/etRaspberryPi"
-        android:layout_alignEnd="@+id/etUsernameEntry" />
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/etPasswordEntry"
         android:layout_below="@+id/tvPasswordEntry"
-        android:layout_alignStart="@+id/tvRaspberryPi"
-        android:layout_alignEnd="@+id/tvRaspberryPi" />
+        android:layout_alignEnd="@+id/etUsernameEntry"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/action_register"
+        android:id="@+id/button"
+        android:layout_below="@+id/bt_raspberry_pi"
+        android:layout_alignStart="@+id/bt_raspberry_pi" />
 </RelativeLayout>

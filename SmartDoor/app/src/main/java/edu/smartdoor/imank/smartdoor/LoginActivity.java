@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        mRegisterView = (Button) findViewById(R.id.bt_register);
+        mRegisterView = (Button) findViewById(R.id.bt_raspberry_pi);
         mRegisterView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

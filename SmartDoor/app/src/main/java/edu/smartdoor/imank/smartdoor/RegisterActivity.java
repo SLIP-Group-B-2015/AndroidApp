@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import org.json.*;
 import cz.msebera.android.httpclient.*;
+
+import com.google.zxing.integration.android.IntentIntegrator;
 import com.loopj.android.http.*;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -22,7 +24,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mLastNameView;
     private EditText mUsernameView;
     private EditText mPasswordView;
-    private EditText mRaspberryPiView;
+    private Button mRaspberryPiView;
     private Button mRegisterView;
 
     private UserRegisterTask mRegTask = null;
@@ -37,9 +39,15 @@ public class RegisterActivity extends AppCompatActivity {
         mLastNameView = (EditText) findViewById(R.id.etLastName);
         mUsernameView = (EditText) findViewById(R.id.etUsernameEntry);
         mPasswordView = (EditText) findViewById(R.id.etPasswordEntry);
-        mRaspberryPiView = (EditText) findViewById(R.id.etRaspberryPi);
+        mRaspberryPiView = (Button) findViewById(R.id.bt_raspberry_pi);
+        mRaspberryPiView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                attemptScan();
+            }
+        });
 
-        mRegisterView = (Button) findViewById(R.id.bt_register);
+        mRegisterView = (Button) findViewById(R.id.bt_raspberry_pi);
         mRegisterView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,6 +63,12 @@ public class RegisterActivity extends AppCompatActivity {
      * @param none
      * @return void
      */
+
+    public void attemptScan() {
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.initiateScan();
+    }
+
     public void attemptRegister()
     {
         String first_name;
@@ -67,7 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
         last_name =  mLastNameView.getText().toString();
         username = mUsernameView.getText().toString();
         password = mPasswordView.getText().toString();
-        raspberry_pi = mRaspberryPiView.getText().toString();
+        raspberry_pi = "not set";//TODO FIX: raspberry_pi = mRaspberryPiView.getText().toString();
 
         mRegTask = new UserRegisterTask(first_name, last_name, username, password, raspberry_pi);
         mRegTask.execute((Void) null);

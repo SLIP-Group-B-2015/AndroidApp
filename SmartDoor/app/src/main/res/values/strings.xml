@@ -5,6 +5,7 @@
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign In</string>
     <string name="action_register">Register</string>
+    <string name="action_scan">Scan QR</string>
     <!-- Strings for Register Activity -->
     <string name="prompt_firstname">First Name</string>
     <string name="prompt_lastname">Last Name</string>
