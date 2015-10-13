@@ -3,6 +3,7 @@
     <string name="app_name">SmartDoor</string>
     <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
+    <string name="prompt_trouble">Trouble scanning? Manually enter ID here</string>
     <string name="action_sign_in">Sign In</string>
     <string name="action_register">Register</string>
     <string name="action_scan">Scan QR</string>

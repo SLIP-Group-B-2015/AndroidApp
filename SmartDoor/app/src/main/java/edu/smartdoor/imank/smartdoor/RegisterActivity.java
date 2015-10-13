@@ -1,5 +1,6 @@
 package edu.smartdoor.imank.smartdoor;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import org.json.*;
 import cz.msebera.android.httpclient.*;
 
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.loopj.android.http.*;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -24,7 +26,8 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mLastNameView;
     private EditText mUsernameView;
     private EditText mPasswordView;
-    private Button mRaspberryPiView;
+    private Button mScanView;
+    private EditText mRaspberryPiView;
     private Button mRegisterView;
 
     private UserRegisterTask mRegTask = null;
@@ -39,15 +42,17 @@ public class RegisterActivity extends AppCompatActivity {
         mLastNameView = (EditText) findViewById(R.id.etLastName);
         mUsernameView = (EditText) findViewById(R.id.etUsernameEntry);
         mPasswordView = (EditText) findViewById(R.id.etPasswordEntry);
-        mRaspberryPiView = (Button) findViewById(R.id.bt_raspberry_pi);
-        mRaspberryPiView.setOnClickListener(new View.OnClickListener() {
+        mScanView = (Button) findViewById(R.id.bt_scan_qr);
+        mScanView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 attemptScan();
             }
         });
 
-        mRegisterView = (Button) findViewById(R.id.bt_raspberry_pi);
+        mRaspberryPiView = (EditText) findViewById(R.id.etRaspberryPi);
+
+        mRegisterView = (Button) findViewById(R.id.bt_register);
         mRegisterView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,8 +70,17 @@ public class RegisterActivity extends AppCompatActivity {
      */
 
     public void attemptScan() {
-        IntentIntegrator integrator = new IntentIntegrator(this);
-        integrator.initiateScan();
+        new IntentIntegrator(this).initiateScan();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent){
+        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        if (scanResult != null) {
+            Bundle received_bundle = intent.getExtras();
+            String id = received_bundle.getString("SCAN_RESULT");
+            mRaspberryPiView.setText(id);
+        }
     }
 
     public void attemptRegister()
@@ -81,7 +95,7 @@ public class RegisterActivity extends AppCompatActivity {
         last_name =  mLastNameView.getText().toString();
         username = mUsernameView.getText().toString();
         password = mPasswordView.getText().toString();
-        raspberry_pi = "not set";//TODO FIX: raspberry_pi = mRaspberryPiView.getText().toString();
+        raspberry_pi = mRaspberryPiView.getText().toString();
 
         mRegTask = new UserRegisterTask(first_name, last_name, username, password, raspberry_pi);
         mRegTask.execute((Void) null);
