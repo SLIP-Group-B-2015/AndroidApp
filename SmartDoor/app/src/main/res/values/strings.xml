@@ -12,4 +12,8 @@
     <string name="prompt_lastname">Last Name</string>
     <string name="prompt_raspberry_pi_id">Raspeberry Pi ID</string>
     <string name="title_activity_register">Smart Door</string>
+    <!-- Strings for Timeline Activity -->
+    <string name="display_title">Event Title</string>
+    <string name="display_description">Description</string>
+    <string name="display_time">00:00 - 01:00</string>
 </resources>
