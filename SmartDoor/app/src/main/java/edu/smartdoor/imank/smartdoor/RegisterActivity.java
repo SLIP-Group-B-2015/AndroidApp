@@ -62,13 +62,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    /*
-     * attemptRegister
-     * Tries to register the user using the user entered details
-     * @param none
-     * @return void
-     */
-
     public void attemptScan() {
         new IntentIntegrator(this).initiateScan();
     }
@@ -83,6 +76,12 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    /*
+     * attemptRegister
+     * Tries to register the user using the user entered details
+     * @param none
+     * @return void
+     */
     public void attemptRegister()
     {
         String first_name;
@@ -142,14 +141,8 @@ public class RegisterActivity extends AppCompatActivity {
             //TODO: go back to Register screen
         }
 
-        public boolean postRequest(String first_name, String last_name, String username, String password, String raspberry_pi) {
-
-            //JSONObject jsonObject = new JSONObject();
-            //try {
-            //    jsonObject.put("message", "Hello World!");
-            //} catch (JSONException e) {
-            //    e.printStackTrace();
-            //}
+        public boolean postRequest(String first_name, String last_name, String username, String password, String raspberry_pi)
+        {
 
             try {
                 SyncHttpClient client = new SyncHttpClient();

@@ -60,4 +60,13 @@
         android:layout_centerVertical="true"
         android:layout_alignStart="@+id/bt_sign_in"
         android:layout_alignEnd="@+id/bt_sign_in" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/action_timeline"
+        android:id="@+id/bt_timeline"
+        android:layout_below="@+id/bt_scan_qr"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/bt_scan_qr" />
 </RelativeLayout>

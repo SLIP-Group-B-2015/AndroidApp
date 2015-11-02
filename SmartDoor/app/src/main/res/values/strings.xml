@@ -16,4 +16,6 @@
     <string name="display_title">Event Title</string>
     <string name="display_description">Description</string>
     <string name="display_time">00:00 - 01:00</string>
+    <!-- Strings used for Testing -->
+    <string name="action_timeline">Timeline</string>
 </resources>

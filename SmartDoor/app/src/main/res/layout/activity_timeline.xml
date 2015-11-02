@@ -7,10 +7,17 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="edu.smartdoor.imank.smartdoor.TimelineActivity">
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <edu.smartdoor.imank.smartdoor.SwipeListView
+        xmlns:swipe="http://schemas.android.com/apk/res-auto"
         android:id="@+id/lt_timeline"
-        android:layout_alignParentStart="true"
-        android:smoothScrollbar="false" />
+        android:listSelector="#00000000"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        swipe:swipeFrontView="@+id/timeline_row_front"
+        swipe:swipeBackView="@+id/timeline_row_back"
+        swipe:swipeDrawableChecked="@drawable/choice_selected"
+        swipe:swipeDrawableUnchecked="@drawable/choice_unselected"
+        swipe:swipeCloseAllItemsWhenMoveList="true"
+        swipe:swipeMode="both"
+        />
 </RelativeLayout>

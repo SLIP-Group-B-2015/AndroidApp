@@ -10,6 +10,8 @@ import android.widget.EditText;
 
 public class LoginActivity extends AppCompatActivity {
 
+    public static final String LOG_TAG = LoginActivity.class.getSimpleName();
+
     /*
      * UI Reference
      */
@@ -17,6 +19,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mPasswordView;
     private Button mSignInView;
     private Button mRegisterView;
+    private Button mTimelineView;
 
     /*
      * Keep track of Login process
@@ -48,7 +51,13 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(v.getContext(), RegisterActivity.class));
             }
         });
-
+        mTimelineView = (Button) findViewById(R.id.bt_timeline);
+        mTimelineView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(v.getContext(), TimelineActivity.class));
+            }
+        });
     }
 
     /*

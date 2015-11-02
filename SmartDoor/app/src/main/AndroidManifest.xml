@@ -20,6 +20,11 @@
             android:label="@string/title_activity_register"
             android:theme="@style/AppTheme" >
         </activity>
+        <activity
+            android:name=".TimelineActivity"
+            android:label="@string/title_activity_register"
+            android:theme="@style/AppTheme" >
+        </activity>
     </application>
 
 </manifest>
