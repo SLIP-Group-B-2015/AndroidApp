@@ -6,4 +6,9 @@
         android:icon="@drawable/ic_nfc"
         android:title="@string/action_nfc"
         app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_pi"
+        android:icon="@drawable/ic_add"
+        android:title="add"
+        app:showAsAction="ifRoom"/>
 </menu>

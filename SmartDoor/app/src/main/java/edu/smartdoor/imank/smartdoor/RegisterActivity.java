@@ -1,6 +1,5 @@
 package edu.smartdoor.imank.smartdoor;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,9 +9,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import org.json.*;
 import cz.msebera.android.httpclient.*;
+import cz.msebera.android.httpclient.client.HttpClient;
+import cz.msebera.android.httpclient.client.methods.HttpPost;
+import cz.msebera.android.httpclient.entity.StringEntity;
+import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
+import cz.msebera.android.httpclient.message.BasicHeader;
+import cz.msebera.android.httpclient.protocol.HTTP;
+import cz.msebera.android.httpclient.util.EntityUtils;
 
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 import com.loopj.android.http.*;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -26,9 +30,10 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mLastNameView;
     private EditText mUsernameView;
     private EditText mPasswordView;
-    private Button mScanView;
-    private EditText mRaspberryPiView;
+    private EditText mEmailView;
     private Button mRegisterView;
+    SmartDoor app;
+    String uuid;
 
     private UserRegisterTask mRegTask = null;
 
@@ -42,15 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
         mLastNameView = (EditText) findViewById(R.id.etLastName);
         mUsernameView = (EditText) findViewById(R.id.etUsernameEntry);
         mPasswordView = (EditText) findViewById(R.id.etPasswordEntry);
-        mScanView = (Button) findViewById(R.id.bt_scan_qr);
-        mScanView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                attemptScan();
-            }
-        });
-
-        mRaspberryPiView = (EditText) findViewById(R.id.etRaspberryPi);
+        mEmailView = (EditText) findViewById(R.id.etEmail);
 
         mRegisterView = (Button) findViewById(R.id.bt_register);
         mRegisterView.setOnClickListener(new View.OnClickListener() {
@@ -60,20 +57,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    public void attemptScan() {
-        new IntentIntegrator(this).initiateScan();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent){
-        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-        if (scanResult != null) {
-            Bundle received_bundle = intent.getExtras();
-            String id = received_bundle.getString("SCAN_RESULT");
-            mRaspberryPiView.setText(id);
-        }
     }
 
     /*
@@ -88,15 +71,15 @@ public class RegisterActivity extends AppCompatActivity {
         String last_name;
         String username;
         String password;
-        String raspberry_pi;
+        String email;
 
         first_name = mFirstNameView.getText().toString();
         last_name =  mLastNameView.getText().toString();
         username = mUsernameView.getText().toString();
         password = mPasswordView.getText().toString();
-        raspberry_pi = mRaspberryPiView.getText().toString();
+        email = mEmailView.getText().toString();
 
-        mRegTask = new UserRegisterTask(first_name, last_name, username, password, raspberry_pi);
+        mRegTask = new UserRegisterTask(first_name, last_name, username, password, email);
         mRegTask.execute((Void) null);
 
     }
@@ -112,21 +95,21 @@ public class RegisterActivity extends AppCompatActivity {
         private String mLastName;
         private String mUsername;
         private String mPassword;
-        private String mRaspberryPi;
+        private String mEmail;
 
-        public UserRegisterTask(String first_name, String last_name, String username, String password, String raspberry_pi)
+        public UserRegisterTask(String first_name, String last_name, String username, String password, String email)
         {
             mFirstName = first_name;
             mLastName = last_name;
-            mRaspberryPi = raspberry_pi;
             mUsername = username;
             mPassword = password;
+            mEmail = email;
         }
 
         @Override
         protected Boolean doInBackground(Void... params)
         {
-            return postRequest(mFirstName, mLastName, mUsername, mPassword, mRaspberryPi);
+            return postRequest(mFirstName, mLastName, mUsername, mPassword, mEmail);
         }
 
         @Override
@@ -141,35 +124,43 @@ public class RegisterActivity extends AppCompatActivity {
             //TODO: go back to Register screen
         }
 
-        public boolean postRequest(String first_name, String last_name, String username, String password, String raspberry_pi)
+        public boolean postRequest(String first_name, String last_name, String username, String password, String email)
         {
+            String json = "";
 
             try {
-                SyncHttpClient client = new SyncHttpClient();
-                RequestParams params = new RequestParams();
-                params.put("first_name", first_name);
-                params.put("last_name", last_name);
-                params.put("username", username);
-                params.put("password", password);
-                params.put("raspberry_pi", raspberry_pi);
-                client.post("http://www.test.com", params, new JsonHttpResponseHandler(){
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject res)
-                    {
-                        // called when response HTTP status is "200 OK"
-                        //TODO: user registered
-                    }
+                HttpClient client = new DefaultHttpClient();
+                HttpPost post = new HttpPost("http://193.62.81.88:5000");
 
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, String res, Throwable t)
-                    {
-                        // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-                        // TODO: Error
-                        System.out.println(res);
-                    }
-                });
-            } catch (Exception e) {
-                Log.e(LOG_TAG, "Error in http connection" + e.toString());
+                JSONObject jsonObject = new JSONObject();
+
+                jsonObject.accumulate("event", "REGISTER");
+                jsonObject.accumulate("firstName", first_name);
+                jsonObject.accumulate("lastName", last_name);
+                jsonObject.accumulate("username", username);
+                jsonObject.accumulate("password", password);
+                jsonObject.accumulate("email", email);
+
+                json = jsonObject.toString();
+
+                Log.d(LOG_TAG, json);
+
+                StringEntity se = new StringEntity(json);
+                se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+                post.setEntity(se);
+
+                HttpResponse httpResponse = client.execute(post);
+
+                String response = EntityUtils.toString(httpResponse.getEntity());
+
+                JSONObject obj = new JSONObject(response);
+
+                Log.d(LOG_TAG, obj.getString("userid"));
+
+            }
+            catch (Exception e)
+            {
+                Log.d(LOG_TAG, e.getMessage());
             }
 
             return true;

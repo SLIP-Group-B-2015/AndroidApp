@@ -19,4 +19,5 @@
     <!-- Strings used for Testing -->
     <string name="action_timeline">Timeline</string>
     <string name="action_nfc">NFC</string>
+    <string name="action_add_pi">Register PI</string>
 </resources>

@@ -4,9 +4,31 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.loopj.android.http.HttpGet;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.SyncHttpClient;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.StringReader;
+
+import javax.json.Json;
+import javax.json.stream.JsonParser;
+
+import cz.msebera.android.httpclient.HttpResponse;
+import cz.msebera.android.httpclient.client.HttpClient;
+import cz.msebera.android.httpclient.entity.StringEntity;
+import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
+import cz.msebera.android.httpclient.message.BasicHeader;
+import cz.msebera.android.httpclient.protocol.HTTP;
+import cz.msebera.android.httpclient.util.EntityUtils;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -20,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button mSignInView;
     private Button mRegisterView;
     private Button mTimelineView;
+    SmartDoor app;
 
     /*
      * Keep track of Login process
@@ -31,6 +54,8 @@ public class LoginActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //app = (SmartDoor) getApplicationContext();
 
         mUsernameView = (EditText) findViewById(R.id.etUsername);
         mPasswordView = (EditText) findViewById(R.id.etPassword);
@@ -96,12 +121,13 @@ public class LoginActivity extends AppCompatActivity {
         {
             mUsername = username;
             mPassword = password;
+
         }
 
         @Override
         protected Boolean doInBackground(Void... params)
         {
-            return null;
+            return postRequest(mUsername, mPassword);
         }
 
         @Override
@@ -114,6 +140,43 @@ public class LoginActivity extends AppCompatActivity {
         protected void onCancelled()
         {
             //TODO: go back to login screen
+        }
+
+        public boolean postRequest(String username, String password)
+        {
+            String json = "";
+
+            try {
+                HttpClient client = new DefaultHttpClient();
+                HttpGet get = new HttpGet("http://193.62.81.88:5000");
+
+                JSONObject jsonObject = new JSONObject();
+
+                jsonObject.accumulate("event", "LOGIN");
+                jsonObject.accumulate("username", username);
+                jsonObject.accumulate("password", password);
+
+                json = jsonObject.toString();
+
+                Log.d(LOG_TAG, json);
+
+                StringEntity se = new StringEntity(json);
+                se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+                get.setEntity(se);
+
+                HttpResponse httpResponse = client.execute(get);
+
+                String response = EntityUtils.toString(httpResponse.getEntity());
+
+                JSONObject obj = new JSONObject(response);
+                Log.d(LOG_TAG, obj.getString("userid"));
+            }
+            catch (Exception e)
+            {
+                Log.d(LOG_TAG, e.getMessage());
+            }
+
+            return true;
         }
     }
 

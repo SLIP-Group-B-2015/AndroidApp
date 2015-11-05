@@ -76,37 +76,29 @@
         android:layout_alignEnd="@+id/etUsernameEntry"
         android:layout_alignParentStart="true" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/action_scan"
-        android:id="@+id/bt_scan_qr"
-        android:longClickable="true"
-        android:nestedScrollingEnabled="false"
-        android:layout_below="@+id/etPasswordEntry"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/prompt_trouble"
-        android:id="@+id/tvTrouble"
-        android:layout_above="@+id/etRaspberryPi"
-        android:layout_alignParentStart="true" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/etRaspberryPi"
-        android:layout_above="@+id/bt_register"
+        android:id="@+id/etEmail"
+        android:layout_below="@+id/tvEmail"
         android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/etPasswordEntry" />
+        android:layout_alignEnd="@+id/tvEmail" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/action_register"
         android:id="@+id/bt_register"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/bt_scan_qr" />
+        android:layout_below="@+id/etEmail"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:id="@+id/tvEmail"
+        android:layout_below="@+id/etPasswordEntry"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/etPasswordEntry" />
 </RelativeLayout>
