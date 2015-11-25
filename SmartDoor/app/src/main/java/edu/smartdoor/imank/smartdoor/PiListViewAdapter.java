@@ -2,6 +2,7 @@ package edu.smartdoor.imank.smartdoor;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +20,12 @@ public class PiListViewAdapter extends BaseAdapter {
 
     LayoutInflater inflater;
     ArrayList<PI> items;
+    Context context;
 
     public PiListViewAdapter(Activity context, ArrayList<PI> items)
     {
         super();
-
+        this.context = context;
         this.items = items;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -50,6 +52,8 @@ public class PiListViewAdapter extends BaseAdapter {
         View vi = convertView;
         PIHolder piHolder;
 
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "font/Montserrat-Regular.otf");
+
         if (vi == null)
         {
             vi = inflater.inflate(R.layout.lt_pi_row, null);
@@ -71,6 +75,9 @@ public class PiListViewAdapter extends BaseAdapter {
 
         piHolder.PI_Name.setText(item.getName());
         piHolder.PI_ID.setText(item.getPI_ID());
+
+        piHolder.PI_Name.setTypeface(typeface);
+        piHolder.PI_ID.setTypeface(typeface);
 
         return vi;
 

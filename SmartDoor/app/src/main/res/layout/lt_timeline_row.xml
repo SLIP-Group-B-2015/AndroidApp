@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#ffffff"
-                android:padding="10dp">
+                android:padding="5dp">
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -40,8 +40,6 @@
                         android:layout_height="wrap_content"
                         android:text="@string/display_title"
                         android:id="@+id/dp_title"
-                        android:padding="2dp"
-                        android:textSize="20dp"
                         android:layout_weight="0.93"
                         android:layout_marginLeft="5dp"
                         android:background="#ffffff" />
@@ -50,7 +48,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/display_time"
-                        android:padding="5dp"
+                        android:padding="2dp"
                         android:textSize="15dp"
                         android:id="@+id/dp_time"
                         android:layout_gravity="right"
@@ -62,8 +60,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/display_description"
                     android:id="@+id/dp_description"
-                    android:padding="5dp"
-                    android:textSize="15dp"
+                    android:textSize="10dp"
                     android:layout_marginLeft="5dp"
                     android:background="#ffffff" />
             </LinearLayout>

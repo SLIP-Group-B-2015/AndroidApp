@@ -3,6 +3,7 @@ package edu.smartdoor.imank.smartdoor;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +73,8 @@ public class TimelineListViewAdapter extends ArrayAdapter {
         View vi = convertView;
         TimelineViewHolder timelineViewHolder;
 
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "font/Montserrat-Regular.otf");
+
         if (vi == null)
         {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
@@ -98,7 +101,7 @@ public class TimelineListViewAdapter extends ArrayAdapter {
 
         timelineViewHolder.tv_time.setText(item.getTime());
         if (item.getDescription().equals("NONE"))
-            timelineViewHolder.tv_description.setText("No Description");
+            timelineViewHolder.tv_description.setText("");
         else
             timelineViewHolder.tv_description.setText(item.getDescription());
 
@@ -108,18 +111,26 @@ public class TimelineListViewAdapter extends ArrayAdapter {
             case 0:
                 timelineViewHolder.event_icon.setImageResource(R.drawable.mail);
                 timelineViewHolder.tv_title.setText(item.getEventName());
+                timelineViewHolder.tv_title.setTextSize(20);
+                timelineViewHolder.tv_title.setPadding(5,5,5,5);
                 break;
             case 1:
                 timelineViewHolder.event_icon.setImageResource(R.drawable.open);
                 timelineViewHolder.tv_title.setText(item.getEventName());
+                timelineViewHolder.tv_title.setTextSize(20);
+                timelineViewHolder.tv_title.setPadding(5, 5, 5, 5);
                 break;
             case 2:
                 timelineViewHolder.event_icon.setImageResource(R.drawable.open);
                 timelineViewHolder.tv_title.setText(item.getEventName());
+                timelineViewHolder.tv_title.setTextSize(20);
+                timelineViewHolder.tv_title.setPadding(5, 5, 5, 5);
                 break;
             case 3:
                 timelineViewHolder.event_icon.setImageResource(R.drawable.closed);
                 timelineViewHolder.tv_title.setText(item.getEventName());
+                timelineViewHolder.tv_title.setTextSize(20);
+                timelineViewHolder.tv_title.setPadding(5,5,5,5);
                 break;
             case 4:
                 if (item.getSenderName().equals("NONE"))
@@ -129,6 +140,10 @@ public class TimelineListViewAdapter extends ArrayAdapter {
                 timelineViewHolder.event_icon.setImageResource(R.drawable.id_scan);
                 break;
         }
+
+        timelineViewHolder.tv_title.setTypeface(typeface);
+        timelineViewHolder.tv_description.setTypeface(typeface);
+        timelineViewHolder.tv_time.setTypeface(typeface);
 
         return vi;
 

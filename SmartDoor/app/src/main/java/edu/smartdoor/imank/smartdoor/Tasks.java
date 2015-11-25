@@ -6,6 +6,11 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.loopj.android.http.HttpGet;
 import org.json.JSONArray;
@@ -297,7 +302,15 @@ public class Tasks {
            }
            else
            {
-               Toast.makeText(context, "Invalid login details, Please try again!", Toast.LENGTH_LONG).show();
+               LayoutInflater inflater_fail = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+               View layout_fail = inflater_fail.inflate(R.layout.toast, null);
+               Toast toast_fail = new Toast(context);
+               TextView toast_text = (TextView) layout_fail.findViewById(R.id.tv_toast);
+               toast_text.setText("Invalid login details, please try again!");
+               toast_fail.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+               toast_fail.setDuration(Toast.LENGTH_LONG);
+               toast_fail.setView(layout_fail);
+               toast_fail.show();
            }
        }
 

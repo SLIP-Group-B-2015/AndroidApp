@@ -393,7 +393,7 @@ public class TimelineActivity extends BaseActivity {
         super.onNewIntent(intent);
         if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {
             mytag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            Toast.makeText(this, "Tag Detected: " + mytag.toString(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "Tag Detected: " + mytag.toString(), Toast.LENGTH_LONG).show();
         }
     }
 

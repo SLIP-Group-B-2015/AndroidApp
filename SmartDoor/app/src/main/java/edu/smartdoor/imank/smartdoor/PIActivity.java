@@ -1,14 +1,18 @@
 package edu.smartdoor.imank.smartdoor;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -99,12 +103,28 @@ public class PIActivity extends BaseActivity {
         }
         if (success)
         {
-            Toast.makeText(this, "Registered PI!", Toast.LENGTH_LONG);
+            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View layout = inflater.inflate(R.layout.toast, null);
+            Toast toast_success = new Toast(this);
+            TextView toast_text = (TextView) layout.findViewById(R.id.tv_toast);
+            toast_text.setText("Registered PI!");
+            toast_success.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+            toast_success.setDuration(Toast.LENGTH_LONG);
+            toast_success.setView(layout);
+            toast_success.show();
             getALLPI(uuid);
         }
         else
         {
-            Toast.makeText(this, "Could not register PI, please try again!", Toast.LENGTH_LONG);
+            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View layout = inflater.inflate(R.layout.toast, null);
+            Toast toast_fail = new Toast(this);
+            TextView toast_text = (TextView) layout.findViewById(R.id.tv_toast);
+            toast_text.setText("Could not register PI, please try again!");
+            toast_fail.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+            toast_fail.setDuration(Toast.LENGTH_LONG);
+            toast_fail.setView(layout);
+            toast_fail.show();
         }
     }
 
