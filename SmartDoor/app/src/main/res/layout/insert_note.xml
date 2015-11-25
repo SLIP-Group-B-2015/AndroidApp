@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="250dp"
+    android:layout_height="150dp"
+    android:padding="10dp"
+    android:background="@drawable/rounded_dialog" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Leave a note"
+            android:id="@+id/textView"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:background="#3f3f3f" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:background="@drawable/username_selector"
+            android:id="@+id/et_note" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/nfc_send"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:background="@drawable/rounded_button"
+            android:id="@+id/bt_send"
+            android:layout_gravity="center_horizontal" />
+</LinearLayout>

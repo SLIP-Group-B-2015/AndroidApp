@@ -7,19 +7,29 @@ public class TimelineItem {
 
     public static final String LOG_TAG = TimelineItem.class.getSimpleName();
 
+    private String raspberryID;
     private String eventID;
     private String eventName;
     private String time;
     private String senderName;
     private String description;
 
-    public TimelineItem(String eventID, String eventName, String senderName, String time, String description)
+    public TimelineItem(String raspberryID, String eventID, String eventName, String time, String description, String senderName)
     {
+        this.raspberryID = raspberryID;
         this.eventID = eventID;
         this.eventName = eventName;
+        this.time = time;
         this.description = description;
         this.senderName = senderName;
-        this.time = time;
+    }
+
+    public String getRaspberryID() {
+        return raspberryID;
+    }
+
+    public void setRaspberryID(String raspberryID) {
+        this.raspberryID = raspberryID;
     }
 
     public String getDescription()

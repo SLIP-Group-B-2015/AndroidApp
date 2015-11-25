@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/listview_item"
+    android:divider="#3f3f3f"
+    android:dividerHeight="10.0sp"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/set_pi_name"
+        android:id="@+id/tv_piname"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:background="#ffffff" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/pi_id"
+        android:id="@+id/tv_piid"
+        android:background="#ffffff" />
+</LinearLayout>

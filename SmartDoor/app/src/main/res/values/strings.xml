@@ -20,4 +20,11 @@
     <string name="action_timeline">Timeline</string>
     <string name="action_nfc">NFC</string>
     <string name="action_add_pi">Register PI</string>
+    <string name="ping">Update Every ...</string>
+    <string name="set_pi_name">Raspberry PI Name</string>
+    <string name="pi_id">Raspberry PI ID</string>
+    <string name="add_note">Add Note</string>
+    <string name="nfc_send">SEND</string>
+    <string name="login">LOGIN</string>
+    <string name="register_title">REGISTER</string>
 </resources>

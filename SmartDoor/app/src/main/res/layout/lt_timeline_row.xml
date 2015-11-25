@@ -1,76 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:padding="0dp">
+    android:background="#3f3f3f"
+    android:orientation="vertical"
+    android:padding="5dp">
 
     <LinearLayout
         android:orientation="horizontal"
-        android:id="@+id/timeline_row_back"
-        android:tag="back"
-        style="@style/MyListBackContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="0dp">
-
-        <ImageButton
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:id="@+id/bt_reply"
-            android:src="@drawable/ic_reply"
-            android:layout_gravity="right"
-            android:layout_marginRight="35dp"
-            android:paddingTop="5dp" />
-        <ImageButton
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:id="@+id/bt_mail"
-            android:src="@drawable/ic_mail_send"
-            android:layout_gravity="right"
-            android:layout_marginRight="30dp"
-            android:paddingTop="5dp" />
-
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal" android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/timeline_row_front"
-        style="@style/MyListFrontContent"
-        android:tag="front">
+        android:background="@drawable/listview_item"
+        android:padding="10dp" >
 
             <ImageView
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:id="@+id/event_icon" />
+                android:id="@+id/event_icon"
+                android:background="#ffffff"
+                android:padding="10dp"/>
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                android:padding="10dp">
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:weightSum="1">
+                    android:weightSum="1"
+                    android:background="#ffffff">
 
                     <TextView
                         android:layout_width="154dp"
                         android:layout_height="wrap_content"
                         android:text="@string/display_title"
                         android:id="@+id/dp_title"
+                        android:padding="2dp"
                         android:textSize="20dp"
                         android:layout_weight="0.93"
-                        android:layout_marginLeft="5dp" />
+                        android:layout_marginLeft="5dp"
+                        android:background="#ffffff" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/display_time"
+                        android:padding="5dp"
+                        android:textSize="15dp"
                         android:id="@+id/dp_time"
                         android:layout_gravity="right"
-                        android:textSize="20dp" />
+                        android:background="#ffffff" />
                 </LinearLayout>
 
                 <TextView
@@ -78,8 +62,10 @@
                     android:layout_height="wrap_content"
                     android:text="@string/display_description"
                     android:id="@+id/dp_description"
+                    android:padding="5dp"
                     android:textSize="15dp"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_marginLeft="5dp"
+                    android:background="#ffffff" />
             </LinearLayout>
     </LinearLayout>
-</FrameLayout>
+</LinearLayout>

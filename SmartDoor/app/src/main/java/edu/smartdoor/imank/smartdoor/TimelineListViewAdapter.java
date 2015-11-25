@@ -83,8 +83,6 @@ public class TimelineListViewAdapter extends ArrayAdapter {
             timelineViewHolder.tv_time = (TextView) vi.findViewById(R.id.dp_time);
             timelineViewHolder.tv_description = (TextView) vi.findViewById(R.id.dp_description);
             timelineViewHolder.event_icon = (ImageView) vi.findViewById(R.id.event_icon);
-            timelineViewHolder.event_reply = (ImageButton) vi.findViewById(R.id.bt_reply);
-            timelineViewHolder.action_mail = (ImageButton) vi.findViewById(R.id.bt_mail);
 
             vi.setTag(timelineViewHolder);
         }
@@ -99,48 +97,38 @@ public class TimelineListViewAdapter extends ArrayAdapter {
         timelineViewHolder.event_icon.setId(position);
 
         timelineViewHolder.tv_time.setText(item.getTime());
-        timelineViewHolder.tv_description.setText(item.getDescription());
-        LinearLayout timeline_back = (LinearLayout) vi.findViewById(R.id.timeline_row_back);
+        if (item.getDescription().equals("NONE"))
+            timelineViewHolder.tv_description.setText("No Description");
+        else
+            timelineViewHolder.tv_description.setText(item.getDescription());
 
         //Switch image icon depending on event
         switch(Integer.parseInt(item.getEventID()))
         {
             case 0:
-                timelineViewHolder.event_icon.setImageResource(R.drawable.ic_mail);
+                timelineViewHolder.event_icon.setImageResource(R.drawable.mail);
                 timelineViewHolder.tv_title.setText(item.getEventName());
-                timeline_back.setBackgroundColor(Color.YELLOW);
-                timelineViewHolder.event_reply.setVisibility(View.INVISIBLE);
-                timelineViewHolder.action_mail.setVisibility(View.INVISIBLE);
                 break;
             case 1:
-                timelineViewHolder.event_icon.setImageResource(R.drawable.ic_door);
+                timelineViewHolder.event_icon.setImageResource(R.drawable.open);
                 timelineViewHolder.tv_title.setText(item.getEventName());
-                timeline_back.setBackgroundColor(Color.rgb(0,162,232));
-                timelineViewHolder.event_reply.setVisibility(View.INVISIBLE);
-                timelineViewHolder.action_mail.setVisibility(View.INVISIBLE);
                 break;
             case 2:
-                timelineViewHolder.tv_title.setText(item.getSenderName());
-                timelineViewHolder.event_icon.setImageResource(R.drawable.ic_user);
-                timeline_back.setBackgroundColor(Color.RED);
-                timelineViewHolder.event_reply.setVisibility(View.VISIBLE);
-                timelineViewHolder.action_mail.setVisibility(View.VISIBLE);
+                timelineViewHolder.event_icon.setImageResource(R.drawable.open);
+                timelineViewHolder.tv_title.setText(item.getEventName());
+                break;
+            case 3:
+                timelineViewHolder.event_icon.setImageResource(R.drawable.closed);
+                timelineViewHolder.tv_title.setText(item.getEventName());
+                break;
+            case 4:
+                if (item.getSenderName().equals("NONE"))
+                    timelineViewHolder.tv_title.setText("UNKNOWN");
+                else
+                    timelineViewHolder.tv_title.setText(item.getSenderName());
+                timelineViewHolder.event_icon.setImageResource(R.drawable.id_scan);
                 break;
         }
-
-        //add stuff for back view
-        timelineViewHolder.event_reply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO: add pop-up to reply
-            }
-        });
-        timelineViewHolder.action_mail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO: add new intent to email
-            }
-        });
 
         return vi;
 
@@ -152,8 +140,6 @@ public class TimelineListViewAdapter extends ArrayAdapter {
         TextView tv_time;
         TextView tv_description;
         ImageView event_icon;
-        ImageButton event_reply;
-        ImageButton action_mail;
     }
 
 }

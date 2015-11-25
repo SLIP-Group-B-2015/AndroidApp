@@ -1,23 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="edu.smartdoor.imank.smartdoor.TimelineActivity">
+    android:orientation="vertical"
+    tools:context="edu.smartdoor.imank.smartdoor.TimelineActivity"
+    android:background="#3f3f3f">
 
-    <edu.smartdoor.imank.smartdoor.SwipeListView
-        xmlns:swipe="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/lt_timeline"
-        android:listSelector="#00000000"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:background="#3f3f3f" >
+
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:layout_margin="5dp"
+            android:drawableTop="@drawable/mail_size"
+            android:id="@+id/bt_mail_filter"
+             />
+
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:layout_margin="5dp"
+            android:drawableTop="@drawable/open_small"
+            android:id="@+id/bt_open_filter"
+             />
+
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:layout_margin="5dp"
+            android:drawableTop="@drawable/closed_small"
+            android:id="@+id/bt_closed_filter"
+             />
+
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:layout_margin="5dp"
+            android:drawableTop="@drawable/id_scan_small"
+            android:id="@+id/bt_idscan_filter"
+            />
+
+    </LinearLayout>
+
+    <ListView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        swipe:swipeFrontView="@+id/timeline_row_front"
-        swipe:swipeBackView="@+id/timeline_row_back"
-        swipe:swipeDrawableChecked="@drawable/choice_selected"
-        swipe:swipeDrawableUnchecked="@drawable/choice_unselected"
-        swipe:swipeCloseAllItemsWhenMoveList="true"
-        swipe:swipeMode="both"
-        />
-</RelativeLayout>
+        android:layout_marginTop="10dp"
+        android:id="@+id/lt_timeline"
+        android:divider="#3f3f3f"
+        android:dividerHeight="10.0sp"
+        android:background="@drawable/listview_item" />
+</LinearLayout>

@@ -8,6 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
+
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -16,23 +19,38 @@ import com.loopj.android.http.SyncHttpClient;
 
 import org.json.JSONObject;
 
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
 import cz.msebera.android.httpclient.Header;
 
-public class PIActivity extends AppCompatActivity {
+public class PIActivity extends BaseActivity {
 
     private static final String LOG_TAG = PIActivity.class.getSimpleName();
 
     private Button mScanView;
     private EditText mRaspberryPiView;
+    private EditText mRaspberryPiNameView;
     private Button mRegisterPIView;
-    private String userid = "12";
+    private String uuid;
+    private ListView pi_list;
 
-    private PiRegisterTask mPiReg;
+    private Tasks.PiRegisterTask mPiReg;
+    private Tasks.GetAllPI mGetPi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pi);
+
+        Log.d(LOG_TAG, "PI Activity Started!");
+
+        uuid = getIntent().getExtras().getString("userid");
+
+        pi_list = (ListView) findViewById(R.id.lv_pi);
+        getALLPI(uuid);
+
         mScanView = (Button) findViewById(R.id.bt_scanqr);
         mScanView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +59,7 @@ public class PIActivity extends AppCompatActivity {
             }
         });
 
+        mRaspberryPiNameView = (EditText) findViewById(R.id.et_piname);
         mRaspberryPiView = (EditText) findViewById(R.id.etRaspberryPi);
 
         mRegisterPIView = (Button) findViewById(R.id.bt_add_pi);
@@ -69,67 +88,49 @@ public class PIActivity extends AppCompatActivity {
 
     public void attemptRegisterPI()
     {
-        mPiReg = new PiRegisterTask(mRaspberryPiView.getText().toString());
-        mPiReg.execute((Void) null);
+        mPiReg = new Tasks.PiRegisterTask(this, mRaspberryPiView.getText().toString(), mRaspberryPiNameView.getText().toString(), uuid);
+        boolean success = false;
+        try {
+            success = mPiReg.execute((Void) null).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        if (success)
+        {
+            Toast.makeText(this, "Registered PI!", Toast.LENGTH_LONG);
+            getALLPI(uuid);
+        }
+        else
+        {
+            Toast.makeText(this, "Could not register PI, please try again!", Toast.LENGTH_LONG);
+        }
     }
 
-    public class PiRegisterTask extends AsyncTask<Void, Void, Boolean>
+    public void getALLPI(String uuid)
     {
-        private String mRaspberry_pi;
-
-        public PiRegisterTask(String raspberry_pi)
-        {
-            mRaspberry_pi = raspberry_pi;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            return postRequest(mRaspberry_pi);
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success)
-        {
-            //TODO: go to main page
-        }
-
-        @Override
-        protected void onCancelled()
-        {
-            //TODO: go back to Register screen
-        }
-
-        public boolean postRequest(String raspberry_pi)
-        {
-
-            try {
-                SyncHttpClient client = new SyncHttpClient();
-                RequestParams params = new RequestParams();
-                params.put("userid", userid);
-                params.put("raspberryid", raspberry_pi);
-                client.post("http://193.62.81.88:5000", params, new JsonHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject res) {
-                        // called when response HTTP status is "200 OK"
-                        //TODO: user registered
-                        Log.d(LOG_TAG, res.toString());
-                    }
-
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                        // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-                        // TODO: Error
-                        Log.d(LOG_TAG, res.toString());
-                    }
-                });
-            } catch (Exception e) {
-                Log.e(LOG_TAG, "Error in http connection" + e.toString());
-            }
-
-            return true;
-
+        mGetPi = new Tasks.GetAllPI(uuid);
+        try {
+            ArrayList<PI> pi_s = mGetPi.execute((Void) null).get();
+            updateList(pi_s);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
 
     }
 
+    public void updateList(ArrayList<PI> items)
+    {
+        PiListViewAdapter adapter = new PiListViewAdapter(this, items);
+        pi_list.setAdapter(adapter);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, TimelineActivity.class).putExtra("userid", uuid));
+    }
 }
